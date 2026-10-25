@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizora — Online Quiz Maker</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <button id="mobile-menu-toggle" class="icon-btn" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="brand-logo">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>Quizora</span>
+            </div>
+            <button id="mobile-theme-toggle" class="icon-btn" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </header>
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <div>
+                        <h2>Quizora</h2>
+                        <p class="tagline">Learn. Practice. Grow.</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <button data-view="dashboard" class="nav-item active">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Dashboard</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button data-view="explore" class="nav-item">
+                            <i class="fa-solid fa-compass"></i>
+                            <span>Explore Quizzes</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button data-view="create" class="nav-item">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            <span>Create Quiz</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button data-view="progress" class="nav-item">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>My Progress</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="theme-toggle-btn" class="theme-toggle-btn">
+                    <i class="fa-solid fa-moon"></i>
+                    <span>Dark Theme</span>
+                </button>
+                <div class="user-profile-widget" id="user-profile-widget">
+                    <div class="avatar-circle" id="user-avatar">DU</div>
+                    <div class="user-info">
+                        <h4 id="user-display-name">Demo User</h4>
+                        <p id="user-display-email">demo@quizora.com</p>
+                    </div>
+                    <button id="auth-action-btn" class="icon-btn" title="Login / Logout">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Bar Header -->
+            <header class="topbar">
+                <div class="topbar-title">
+                    <h1 id="page-title">Dashboard</h1>
+                    <p id="page-subtitle">Welcome back, check your latest activity and quizzes.</p>
+                </div>
+                <div class="topbar-actions">
+                    <div class="streak-badge" title="Current Practice Streak">
+                        <i class="fa-solid fa-fire"></i>
+                        <span id="header-streak-count">0</span> Days
+                    </div>
+                    <button id="topbar-auth-btn" class="btn btn-outline">
+                        <i class="fa-solid fa-user"></i> Login / Register
+                    </button>
+                </div>
+            </header>
+
+            <!-- Views Container -->
+            <div class="views-wrapper">
+
+                <!-- 1. DASHBOARD VIEW -->
+                <section id="dashboard-view" class="view-section active">
+                    <!-- Welcome Banner -->
+                    <div class="welcome-banner">
+                        <div class="banner-content">
+                            <h2>Master New Skills with Interactive Quizzes</h2>
+                            <p>Challenge yourself across programming, science, mathematics, and general knowledge. Create your own quizzes or test your limits today!</p>
+                            <div class="banner-btns">
+                                <button class="btn btn-primary" data-action="go-explore">
+                                    <i class="fa-solid fa-compass"></i> Explore Quizzes
+                                </button>
+                                <button class="btn btn-secondary" data-action="go-create">
+                                    <i class="fa-solid fa-plus"></i> Create a Quiz
+                                </button>
+                            </div>
+                        </div>
+                        <div class="banner-graphic">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon purple"><i class="fa-solid fa-book-open"></i></div>
+                            <div class="stat-details">
+                                <h3 id="stat-total-quizzes">0</h3>
+                                <p>Available Quizzes</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon blue"><i class="fa-solid fa-circle-check"></i></div>
+                            <div class="stat-details">
+                                <h3 id="stat-completed-quizzes">0</h3>
+                                <p>Quizzes Completed</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green"><i class="fa-solid fa-award"></i></div>
+                            <div class="stat-details">
+                                <h3 id="stat-avg-score">0%</h3>
+                                <p>Average Score</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange"><i class="fa-solid fa-fire"></i></div>
+                            <div class="stat-details">
+                                <h3 id="stat-streak">0 Days</h3>
+                                <p>Practice Streak</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Featured Quizzes Section -->
+                    <div class="section-header">
+                        <h3>Featured Quizzes</h3>
+                        <button class="text-btn" data-action="go-explore">View All <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                    <div class="quiz-grid" id="featured-quizzes-grid">
+                        <!-- Populated dynamically -->
+                    </div>
+
+                    <!-- Creator Callout -->
+                    <div class="creator-callout">
+                        <div class="callout-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                        <div class="callout-text">
+                            <h3>Have a topic you are passionate about?</h3>
+                            <p>Build your custom quiz in minutes with our intuitive quiz creator and share it with learners worldwide.</p>
+                        </div>
+                        <button class="btn btn-primary" data-action="go-create">Start Creating</button>
+                    </div>
+                </section>
+
+                <!-- 2. EXPLORE QUIZZES VIEW -->
+                <section id="explore-view" class="view-section">
+                    <div class="filter-toolbar">
+                        <div class="search-box">
+                            <i class="fa-solid fa-search"></i>
+                            <input type="text" id="quiz-search-input" placeholder="Search quizzes by title or description...">
+                        </div>
+                        <div class="filter-dropdowns">
+                            <select id="difficulty-filter" class="form-control">
+                                <option value="all">All Difficulties</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Category Chips -->
+                    <div class="category-chips" id="category-chips-container">
+                        <button class="chip active" data-category="All">All Categories</button>
+                        <button class="chip" data-category="Programming">Programming</button>
+                        <button class="chip" data-category="Science">Science</button>
+                        <button class="chip" data-category="General Knowledge">General Knowledge</button>
+                        <button class="chip" data-category="Mathematics">Mathematics</button>
+                    </div>
+
+                    <!-- Quiz Grid -->
+                    <div class="quiz-grid" id="explore-quizzes-grid">
+                        <!-- Populated dynamically -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="explore-empty-state" class="empty-state hidden">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <h3>No quizzes found</h3>
+                        <p>Try adjusting your search query or category filters.</p>
+                    </div>
+                </section>
+
+                <!-- 3. CREATE QUIZ VIEW -->
+                <section id="create-view" class="view-section">
+                    <div class="form-container">
+                        <form id="create-quiz-form">
+                            <div class="form-card">
+                                <h3>Quiz Basic Information</h3>
+                                <div class="form-group">
+                                    <label for="quiz-title-input">Quiz Title *</label>
+                                    <input type="text" id="quiz-title-input" class="form-control" placeholder="e.g. Advanced JavaScript Concepts" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="quiz-desc-input">Short Description *</label>
+                                    <textarea id="quiz-desc-input" class="form-control" rows="2" placeholder="Briefly describe what this quiz covers..." required></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="quiz-category-input">Category *</label>
+                                        <select id="quiz-category-input" class="form-control" required>
+                                            <option value="Programming">Programming</option>
+                                            <option value="Science">Science</option>
+                                            <option value="General Knowledge">General Knowledge</option>
+                                            <option value="Mathematics">Mathematics</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="quiz-difficulty-input">Difficulty *</label>
+                                        <select id="quiz-difficulty-input" class="form-control" required>
+                                            <option value="Easy">Easy</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Hard">Hard</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="questions-builder-header">
+                                <h3>Quiz Questions</h3>
+                                <button type="button" id="add-question-btn" class="btn btn-secondary">
+                                    <i class="fa-solid fa-plus"></i> Add Question
+                                </button>
+                            </div>
+
+                            <div id="questions-builder-container">
+                                <!-- Dynamic Question Cards inserted here -->
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i> Publish Quiz
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 4. TAKE QUIZ VIEW -->
+                <section id="take-quiz-view" class="view-section">
+                    <div class="quiz-player-container">
+                        <div class="quiz-player-header">
+                            <div>
+                                <span id="player-quiz-category" class="badge-category">Programming</span>
+                                <h2 id="player-quiz-title">Quiz Title</h2>
+                            </div>
+                            <div class="quiz-timer-box" id="quiz-timer-box">
+                                <i class="fa-solid fa-clock"></i>
+                                <span id="timer-display">05:00</span>
+                            </div>
+                        </div>
+
+                        <div class="quiz-progress-bar-container">
+                            <div class="progress-info">
+                                <span id="question-counter-text">Question 1 of 5</span>
+                                <span id="progress-percentage">20%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div id="quiz-progress-fill" class="progress-fill" style="width: 20%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="question-card-box">
+                            <h3 id="current-question-text">Question text goes here?</h3>
+                            <div class="options-list" id="current-options-list">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="quiz-player-footer">
+                            <button id="prev-question-btn" class="btn btn-outline">
+                                <i class="fa-solid fa-arrow-left"></i> Previous
+                            </button>
+                            <button id="next-question-btn" class="btn btn-primary">
+                                Next <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. RESULTS & ANSWER REVIEW VIEW -->
+                <section id="results-view" class="view-section">
+                    <div class="results-container">
+                        <div class="results-hero-card">
+                            <div class="score-badge-circle" id="score-circle-badge">
+                                <span id="results-score-percent">85%</span>
+                            </div>
+                            <h2 id="results-completion-msg">Great Job!</h2>
+                            <p id="results-performance-msg">You have a solid grasp of this topic.</p>
+                            
+                            <div class="results-stats-row">
+                                <div class="res-stat">
+                                    <span class="res-val" id="res-correct-count">4</span>
+                                    <span class="res-lbl">Correct</span>
+                                </div>
+                                <div class="res-stat">
+                                    <span class="res-val" id="res-incorrect-count">1</span>
+                                    <span class="res-lbl">Incorrect</span>
+                                </div>
+                                <div class="res-stat">
+                                    <span class="res-val" id="res-unanswered-count">0</span>
+                                    <span class="res-lbl">Unanswered</span>
+                                </div>
+                                <div class="res-stat">
+                                    <span class="res-val" id="res-time-taken">02:15</span>
+                                    <span class="res-lbl">Time Taken</span>
+                                </div>
+                                <div class="res-stat">
+                                    <span class="res-val xp-earned" id="res-xp-earned">+120</span>
+                                    <span class="res-lbl">XP Earned</span>
+                                </div>
+                            </div>
+
+                            <div class="results-action-buttons">
+                                <button id="retry-quiz-btn" class="btn btn-primary">
+                                    <i class="fa-solid fa-rotate-right"></i> Retry Quiz
+                                </button>
+                                <button id="retry-incorrect-btn" class="btn btn-secondary hidden">
+                                    <i class="fa-solid fa-bolt"></i> Retry Incorrect Only
+                                </button>
+                                <button class="btn btn-outline" data-action="go-explore">
+                                    <i class="fa-solid fa-compass"></i> Explore More
+                                </button>
+                                <button class="btn btn-outline" data-action="go-dashboard">
+                                    <i class="fa-solid fa-house"></i> Dashboard
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Answer Review -->
+                        <div class="review-section-header">
+                            <h3>Detailed Answer Review</h3>
+                            <p>Review each question, your selected answer, and the correct explanation.</p>
+                        </div>
+                        <div id="answer-review-list" class="answer-review-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. MY PROGRESS VIEW -->
+                <section id="progress-view" class="view-section">
+                    <div class="progress-hero-grid">
+                        <div class="progress-card summary-card">
+                            <div class="summary-header">
+                                <i class="fa-solid fa-trophy"></i>
+                                <h3>Total XP & Level</h3>
+                            </div>
+                            <div class="xp-display">
+                                <h2 id="prog-total-xp">0 XP</h2>
+                                <p id="prog-user-level">Rank: Novice Learner</p>
+                            </div>
+                        </div>
+                        <div class="progress-card summary-card">
+                            <div class="summary-header">
+                                <i class="fa-solid fa-fire"></i>
+                                <h3>Practice Streak</h3>
+                            </div>
+                            <div class="xp-display">
+                                <h2 id="prog-streak-days">0 Days</h2>
+                                <p>Consecutive active days</p>
+                            </div>
+                        </div>
+                        <div class="progress-card summary-card">
+                            <div class="summary-header">
+                                <i class="fa-solid fa-chart-pie"></i>
+                                <h3 id="prog-avg-score">Accuracy</h3>
+                            </div>
+                            <div class="xp-display">
+                                <h2 id="prog-avg-score-val">0%</h2>
+                                <p>Average score across all attempts</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Achievements Badges Section -->
+                    <div class="section-header">
+                        <h3>Unlocked Achievements</h3>
+                    </div>
+                    <div class="achievements-grid" id="achievements-grid">
+                        <!-- Populated dynamically -->
+                    </div>
+
+                    <!-- Recent Attempts Table -->
+                    <div class="section-header" style="margin-top: 2rem;">
+                        <h3>Quiz Attempt History</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="attempts-table" id="attempts-table">
+                            <thead>
+                                <tr>
+                                    <th>Quiz Title</th>
+                                    <th>Category</th>
+                                    <th>Score</th>
+                                    <th>Correct / Total</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attempts-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="attempts-empty-state" class="empty-state hidden" style="padding: 2rem;">
+                        <p>No quiz attempts recorded yet. Start a quiz to build your history!</p>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- AUTHENTICATION MODAL -->
+    <div id="auth-modal" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="auth-modal-title">Welcome to Quizora</h3>
+                <button id="close-auth-modal" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Login</button>
+                    <button class="auth-tab" data-tab="signup">Sign Up</button>
+                </div>
+                
+                <form id="auth-form">
+                    <div class="form-group" id="name-field-group" style="display: none;">
+                        <label for="auth-name">Full Name</label>
+                        <input type="text" id="auth-name" class="form-control" placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="auth-email">Email Address</label>
+                        <input type="email" id="auth-email" class="form-control" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="auth-password">Password</label>
+                        <input type="password" id="auth-password" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <div id="auth-error-msg" class="auth-error hidden"></div>
+                    <button type="submit" id="auth-submit-btn" class="btn btn-primary btn-block" style="margin-top: 1rem;">Login</button>
+                </form>
+                <p class="auth-demo-note"><i class="fa-solid fa-shield-halved"></i> Frontend Demo Authentication (stored locally in browser).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS CONTAINER -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>
